@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    "eslint-plugin-bacon"
+  ],
+  "rules": {
+    "eslint-plugin-bacon/modern-react-native": "error",
+    "eslint-plugin-bacon/no-empty-styles": "error",
+    "eslint-plugin-bacon/no-vector-icon-barrel": "error"
+  }
+}

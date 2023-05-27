@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "78d509ea-716b-4e2d-8e50-bebc67f2dc26"
+      }
+    },
+    "owner": "vatsal0601"
   }
 }
