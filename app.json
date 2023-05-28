@@ -2,6 +2,7 @@
   "expo": {
     "name": "meeemories",
     "slug": "meeemories",
+    "scheme": "meeemories",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,7 +30,8 @@
     "extra": {
       "eas": {
         "projectId": "78d509ea-716b-4e2d-8e50-bebc67f2dc26"
-      }
+      },
+      "clerkPublishableKey": "pk_test_c2F2aW5nLXN0YXJsaW5nLTU4LmNsZXJrLmFjY291bnRzLmRldiQ"
     },
     "owner": "vatsal0601"
   }

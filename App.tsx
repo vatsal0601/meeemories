@@ -1,8 +1,15 @@
 import * as React from "react";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { NavigationContainer } from "@react-navigation/native";
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from "@react-navigation/stack";
+import Constants from "expo-constants";
+import * as SecureStore from "expo-secure-store";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
+import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 import {
   Syne_400Regular,
   Syne_500Medium,
@@ -11,6 +18,32 @@ import {
   Syne_800ExtraBold,
   useFonts,
 } from "@expo-google-fonts/syne";
+
+import Home from "./screens/home";
+import Register from "./screens/register";
+
+const tokenCache = {
+  async getToken(key: string) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (err) {
+      return null;
+    }
+  },
+  async saveToken(key: string, value: string) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      return;
+    }
+  },
+};
+
+export type RootStackParamList = {
+  Home: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,35 +56,44 @@ const App = () => {
     Syne_800ExtraBold,
   });
 
-  const onLayoutRootView = React.useCallback(async () => {
-    if (!fontsLoaded) return;
-    await SplashScreen.hideAsync();
-  }, [fontsLoaded]);
+  const { isLoaded } = useAuth();
 
-  if (!fontsLoaded) return null;
+  const onLayoutRootView = React.useCallback(async () => {
+    if (!fontsLoaded || !isLoaded) return;
+    await SplashScreen.hideAsync();
+  }, [fontsLoaded, isLoaded]);
+
+  if (!fontsLoaded || !isLoaded) return null;
 
   return (
-    <>
-      <StatusBar style="auto" />
-      <SafeAreaProvider onLayout={onLayoutRootView}>
-        <SafeAreaView style={styles.container}>
-          <Text style={styles.text}>
-            Open up App.js to start working on your app!
-          </Text>
-        </SafeAreaView>
-      </SafeAreaProvider>
-    </>
+    <SafeAreaProvider onLayout={onLayoutRootView}>
+      <SignedIn>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            ...TransitionPresets.SlideFromRightIOS,
+          }}>
+          <Stack.Screen name="Home" component={Home} />
+        </Stack.Navigator>
+      </SignedIn>
+      <SignedOut>
+        <Register />
+      </SignedOut>
+    </SafeAreaProvider>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: { fontFamily: "Syne_400Regular" },
-});
+const Wrapper = () => (
+  <>
+    <StatusBar style="auto" />
+    <ClerkProvider
+      publishableKey={Constants.expoConfig.extra.clerkPublishableKey}
+      tokenCache={tokenCache}>
+      <NavigationContainer>
+        <App />
+      </NavigationContainer>
+    </ClerkProvider>
+  </>
+);
 
-export default App;
+export default Wrapper;
