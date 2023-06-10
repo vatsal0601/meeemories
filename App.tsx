@@ -19,8 +19,12 @@ import {
   useFonts,
 } from "@expo-google-fonts/syne";
 
+import { DataProvider } from "./contexts/DataContext";
+
+import CreateMemory from "./screens/create-memory";
 import Home from "./screens/home";
 import Register from "./screens/register";
+import CreateMemoryButton from "./components/create-memory-button";
 
 const tokenCache = {
   async getToken(key: string) {
@@ -41,6 +45,7 @@ const tokenCache = {
 
 export type RootStackParamList = {
   Home: undefined;
+  CreateMemory: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -68,13 +73,21 @@ const App = () => {
   return (
     <SafeAreaProvider onLayout={onLayoutRootView}>
       <SignedIn>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-            ...TransitionPresets.SlideFromRightIOS,
-          }}>
-          <Stack.Screen name="Home" component={Home} />
-        </Stack.Navigator>
+        <DataProvider>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}>
+            <Stack.Group
+              screenOptions={{ ...TransitionPresets.SlideFromRightIOS }}>
+              <Stack.Screen name="Home" component={Home} />
+            </Stack.Group>
+            <Stack.Group screenOptions={{ presentation: "modal" }}>
+              <Stack.Screen name="CreateMemory" component={CreateMemory} />
+            </Stack.Group>
+          </Stack.Navigator>
+          <CreateMemoryButton />
+        </DataProvider>
       </SignedIn>
       <SignedOut>
         <Register />

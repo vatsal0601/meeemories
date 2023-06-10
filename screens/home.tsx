@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#030712",
     borderTopColor: "#1f2937",
     elevation: 0,
+    zIndex: 1,
   },
 });
 
