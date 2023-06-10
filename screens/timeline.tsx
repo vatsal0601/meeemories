@@ -1,4 +1,5 @@
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 import { useData } from "../contexts/DataContext";
@@ -24,9 +25,18 @@ const Timeline = () => {
 
   return (
     <Layout>
-      {isLoading ? <Text>Loading...</Text> : <Text>Timeline</Text>}
+      <Text type="bold" style={styles.title}>
+        timeline of your memories
+      </Text>
     </Layout>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 24,
+    color: "#f9fafb",
+  },
+});
 
 export default Timeline;

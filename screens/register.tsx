@@ -12,15 +12,19 @@ import Text from "../components/ui/text";
 WebBrowser.maybeCompleteAuthSession();
 
 const Register = () => {
+  const [isLoading, setIsLoading] = React.useState(false);
+
   useWarmUpBrowser();
 
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
 
   const onPress = React.useCallback(async () => {
     try {
+      setIsLoading(true);
       const { createdSessionId, setActive } = await startOAuthFlow({});
 
       if (createdSessionId) setActive({ session: createdSessionId });
+      setIsLoading(false);
     } catch (err) {
       console.error("OAuth error", err);
     }
@@ -41,9 +45,12 @@ const Register = () => {
           lane!
         </Text>
       </View>
-      <Pressable onPress={onPress} style={styles.buttonContainer}>
+      <Pressable
+        onPress={onPress}
+        disabled={isLoading}
+        style={[styles.buttonContainer, isLoading && { opacity: 0.5 }]}>
         <Text type="semiBold" style={styles.buttonText}>
-          lets get started!
+          {isLoading ? "starting..." : "lets get started!"}
         </Text>
         <ArrowRight stroke="#030712" strokeWidth={2} />
       </Pressable>

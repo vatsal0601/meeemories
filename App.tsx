@@ -98,7 +98,7 @@ const App = () => {
 
 const Wrapper = () => (
   <>
-    <StatusBar style="auto" />
+    <StatusBar style="inverted" />
     <ClerkProvider
       publishableKey={Constants.expoConfig.extra.clerkPublishableKey}
       tokenCache={tokenCache}>

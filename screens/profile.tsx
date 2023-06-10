@@ -61,6 +61,8 @@ const settingStyles = StyleSheet.create({
 });
 
 const Profile = () => {
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const { user } = useUser();
   const { signOut } = useAuth();
 
@@ -101,9 +103,16 @@ const Profile = () => {
             </View>
           </View>
         </View>
-        <Pressable onPress={() => signOut()} style={styles.buttonContainer}>
+        <Pressable
+          onPress={async () => {
+            setIsLoading(true);
+            await signOut();
+            setIsLoading(false);
+          }}
+          disabled={isLoading}
+          style={[styles.buttonContainer, isLoading && { opacity: 0.5 }]}>
           <Text type="semiBold" style={styles.buttonText}>
-            logout
+            {isLoading ? "logging out" : "logout"}
           </Text>
         </Pressable>
       </View>
