@@ -24,7 +24,7 @@ const CreateMemoryButton = () => {
   if (state?.routes[state?.index]?.name === "CreateMemory") return null;
 
   const onPress = () => {
-    navigation.navigate("CreateMemory");
+    navigation.navigate("CreateMemory", { mode: "create" });
   };
 
   return (

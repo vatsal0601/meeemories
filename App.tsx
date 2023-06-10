@@ -45,7 +45,7 @@ const tokenCache = {
 
 export type RootStackParamList = {
   Home: undefined;
-  CreateMemory: undefined;
+  CreateMemory: { mode: "create" } | { mode: "edit"; id: string };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
