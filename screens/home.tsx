@@ -5,14 +5,17 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import MapIcon from "../icons/map";
 import UserIcon from "../icons/user";
+import CreateMemoryButton from "../components/create-memory-button";
 import TabIcon from "../components/tab-icon";
 
+import CreateMemory from "./create-memory";
 import Profile from "./profile";
 import Timeline from "./timeline";
 
 export type TabParamList = {
   Timeline: undefined;
   Profile: undefined;
+  CreateMemory: { id?: string };
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -39,6 +42,16 @@ const Home = () => {
           tabBarIcon: props => (
             <TabIcon focused={props.focused} size={props.size} icon={MapIcon} />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="CreateMemory"
+        component={CreateMemory}
+        options={{
+          tabBarButton: props => <CreateMemoryButton {...props} />,
+          tabBarStyle: {
+            display: "none",
+          },
         }}
       />
       <Tab.Screen

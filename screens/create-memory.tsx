@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Pressable, StyleSheet } from "react-native";
-import type { StackScreenProps } from "@react-navigation/stack";
+import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
 import ArrowLeft from "../icons/arrow-left";
 import Layout from "../components/layout";
 import Text from "../components/ui/text";
 
-import type { RootStackParamList } from "../App";
+import type { TabParamList } from "./home";
 
-type Props = StackScreenProps<RootStackParamList, "CreateMemory">;
+type Props = BottomTabScreenProps<TabParamList, "CreateMemory">;
 
 const CreateMemory = ({ navigation, route }: Props) => {
   return (
@@ -20,7 +20,7 @@ const CreateMemory = ({ navigation, route }: Props) => {
         <Text style={styles.backText}>go back</Text>
       </Pressable>
       <Text type="bold" style={styles.title}>
-        {route.params.mode === "create" ? "post" : "edit"} your memory
+        {route.params?.id === "create" ? "post" : "edit"} your memory
       </Text>
     </Layout>
   );

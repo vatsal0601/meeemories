@@ -1,36 +1,14 @@
 import * as React from "react";
 import { Pressable, StyleSheet } from "react-native";
-import { useNavigation, useNavigationState } from "@react-navigation/native";
-import type { StackNavigationProp } from "@react-navigation/stack";
-
-import { useData } from "../contexts/DataContext";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import type { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 
 import PlusIcon from "../icons/plus";
 
-import type { RootStackParamList } from "../App";
-
-type CreateMemoryButtonNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  "Home"
->;
-
-const CreateMemoryButton = () => {
-  const { tabBarHeight } = useData();
-  const navigation = useNavigation<CreateMemoryButtonNavigationProp>();
-  const state = useNavigationState(state => state);
-
-  if (tabBarHeight === null || tabBarHeight === 0) return null;
-
-  if (state?.routes[state?.index]?.name === "CreateMemory") return null;
-
-  const onPress = () => {
-    navigation.navigate("CreateMemory", { mode: "create" });
-  };
-
+const CreateMemoryButton = ({ style, ...rest }: BottomTabBarButtonProps) => {
+  const insets = useSafeAreaInsets();
   return (
-    <Pressable
-      onPress={onPress}
-      style={[styles.container, { bottom: tabBarHeight }]}>
+    <Pressable style={[styles.container, { bottom: insets.bottom }]} {...rest}>
       <PlusIcon width={40} height={40} stroke="#9ca3af" />
     </Pressable>
   );

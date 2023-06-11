@@ -1,10 +1,6 @@
 import * as React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
-import {
-  createStackNavigator,
-  TransitionPresets,
-} from "@react-navigation/stack";
 import Constants from "expo-constants";
 import * as SecureStore from "expo-secure-store";
 import * as SplashScreen from "expo-splash-screen";
@@ -21,10 +17,8 @@ import {
 
 import { DataProvider } from "./contexts/DataContext";
 
-import CreateMemory from "./screens/create-memory";
 import Home from "./screens/home";
 import Register from "./screens/register";
-import CreateMemoryButton from "./components/create-memory-button";
 
 const tokenCache = {
   async getToken(key: string) {
@@ -47,8 +41,6 @@ export type RootStackParamList = {
   Home: undefined;
   CreateMemory: { mode: "create" } | { mode: "edit"; id: string };
 };
-
-const Stack = createStackNavigator<RootStackParamList>();
 
 SplashScreen.preventAutoHideAsync();
 
@@ -74,20 +66,7 @@ const App = () => {
     <SafeAreaProvider onLayout={onLayoutRootView}>
       <SignedIn>
         <DataProvider>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}>
-            <Stack.Group
-              screenOptions={{ ...TransitionPresets.SlideFromRightIOS }}>
-              <Stack.Screen name="Home" component={Home} />
-            </Stack.Group>
-            <Stack.Group
-              screenOptions={{ ...TransitionPresets.ModalSlideFromBottomIOS }}>
-              <Stack.Screen name="CreateMemory" component={CreateMemory} />
-            </Stack.Group>
-          </Stack.Navigator>
-          <CreateMemoryButton />
+          <Home />
         </DataProvider>
       </SignedIn>
       <SignedOut>
