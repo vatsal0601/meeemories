@@ -82,7 +82,8 @@ const App = () => {
               screenOptions={{ ...TransitionPresets.SlideFromRightIOS }}>
               <Stack.Screen name="Home" component={Home} />
             </Stack.Group>
-            <Stack.Group screenOptions={{ presentation: "modal" }}>
+            <Stack.Group
+              screenOptions={{ ...TransitionPresets.ModalSlideFromBottomIOS }}>
               <Stack.Screen name="CreateMemory" component={CreateMemory} />
             </Stack.Group>
           </Stack.Navigator>
