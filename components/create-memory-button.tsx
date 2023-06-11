@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Platform, Pressable, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 
@@ -7,8 +7,18 @@ import PlusIcon from "../icons/plus";
 
 const CreateMemoryButton = ({ style, ...rest }: BottomTabBarButtonProps) => {
   const insets = useSafeAreaInsets();
+
+  const bottomStyle = Platform.select({
+    ios: {
+      bottom: insets.bottom,
+    },
+    android: {
+      bottom: insets.bottom + 64,
+    },
+  });
+
   return (
-    <Pressable style={[styles.container, { bottom: insets.bottom }]} {...rest}>
+    <Pressable style={[styles.container, bottomStyle]} {...rest}>
       <PlusIcon width={40} height={40} stroke="#9ca3af" />
     </Pressable>
   );
