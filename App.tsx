@@ -1,5 +1,6 @@
 import * as React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { NavigationContainer } from "@react-navigation/native";
 import Constants from "expo-constants";
 import * as SecureStore from "expo-secure-store";
@@ -60,10 +61,14 @@ const App = () => {
 
   if (!fontsLoaded || !isLoaded) return null;
 
+  const queryClient = new QueryClient();
+
   return (
     <SafeAreaProvider onLayout={onLayoutRootView}>
       <SignedIn>
-        <Home />
+        <QueryClientProvider client={queryClient}>
+          <Home />
+        </QueryClientProvider>
       </SignedIn>
       <SignedOut>
         <Register />
