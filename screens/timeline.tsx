@@ -2,23 +2,19 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { Image } from "expo-image";
-
-import { useData } from "../contexts/DataContext";
+import { useAuth } from "@clerk/clerk-expo";
 
 import Layout from "../components/layout";
 import Text from "../components/ui/text";
 
 const Timeline = () => {
   const [isLoading, setIsLoading] = React.useState(false);
-  const { tabBarHeight: dataTabBarHeight, setTabBarHeight } = useData();
+  const { getToken } = useAuth();
   const tabBarHeight = useBottomTabBarHeight();
 
   React.useEffect(() => {
     const init = async () => {
-      setIsLoading(true);
-      if (dataTabBarHeight === null || dataTabBarHeight === 0)
-        setTabBarHeight(tabBarHeight);
-      setIsLoading(false);
+      // Get the user's Clerk JWT token
     };
 
     init();
@@ -39,6 +35,9 @@ const Timeline = () => {
           style={styles.image}
         />
       </View>
+      <Text type="bold" style={styles.title}>
+        {isLoading ? "Loading..." : "Done"}
+      </Text>
     </Layout>
   );
 };

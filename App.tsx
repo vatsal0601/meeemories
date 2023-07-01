@@ -15,8 +15,6 @@ import {
   useFonts,
 } from "@expo-google-fonts/syne";
 
-import { DataProvider } from "./contexts/DataContext";
-
 import Home from "./screens/home";
 import Register from "./screens/register";
 
@@ -65,9 +63,7 @@ const App = () => {
   return (
     <SafeAreaProvider onLayout={onLayoutRootView}>
       <SignedIn>
-        <DataProvider>
-          <Home />
-        </DataProvider>
+        <Home />
       </SignedIn>
       <SignedOut>
         <Register />

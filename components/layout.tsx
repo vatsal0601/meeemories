@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, type StyleProp, type ViewStyle } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import {
   SafeAreaView,
@@ -9,14 +9,25 @@ import {
 interface Props extends SafeAreaViewProps {
   children: React.ReactNode;
   isScrollable?: boolean;
+  contentStyle?: StyleProp<ViewStyle>;
 }
 
-const Layout = ({ isScrollable, style, children, ...rest }: Props) => {
+const Layout = ({
+  isScrollable,
+  style,
+  contentStyle,
+  children,
+  ...rest
+}: Props) => {
   if (isScrollable)
     return (
       <ScrollView
+        alwaysBounceHorizontal={false}
+        alwaysBounceVertical={false}
+        bounces={false}
+        overScrollMode="never"
         style={[styles.container, style]}
-        contentContainerStyle={styles.contentContainer}
+        contentContainerStyle={[styles.contentContainer, contentStyle]}
         {...rest}>
         <SafeAreaView>{children}</SafeAreaView>
       </ScrollView>
@@ -32,8 +43,7 @@ const Layout = ({ isScrollable, style, children, ...rest }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 24,
-    paddingHorizontal: 24,
+    padding: 24,
     backgroundColor: "#030712",
   },
   contentContainer: {
