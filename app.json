@@ -28,6 +28,15 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you add them as memories.",
+          "cameraPermission": "The app accesses your camera to let you instantly add photos as memories."
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "78d509ea-716b-4e2d-8e50-bebc67f2dc26"

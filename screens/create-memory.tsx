@@ -2,6 +2,7 @@ import * as React from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { Image } from "expo-image";
+import * as ImagePicker from "expo-image-picker";
 
 import ArrowLeft from "../icons/arrow-left";
 import XCircle from "../icons/x-circle";
@@ -48,6 +49,21 @@ type Props = BottomTabScreenProps<TabParamList, "CreateMemory">;
 
 const CreateMemory = ({ navigation, route }: Props) => {
   const [description, setDescription] = React.useState("");
+  const [media, setMedia] = React.useState<ImagePicker.ImagePickerAsset[]>([]);
+
+  const handleMediaButton = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsMultipleSelection: true,
+        quality: 1,
+      });
+      console.log(result);
+      if (!result.canceled) setMedia(result.assets);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Layout isScrollable={true} contentStyle={styles.layout}>
@@ -71,25 +87,28 @@ const CreateMemory = ({ navigation, route }: Props) => {
           returnKeyType="done"
           style={styles.input}
         />
-        <Pressable style={styles.mediaButtonContainer}>
+        <Pressable
+          onPress={handleMediaButton}
+          style={styles.mediaButtonContainer}>
           <Text type="semiBold" style={styles.mediaButtonText}>
             add media
           </Text>
         </Pressable>
-        <View style={styles.mediaContainer}>
-          <MemoryMedia
-            source={
-              "https://images.unsplash.com/photo-1533158307587-828f0a76ef46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80"
-            }
-            onPress={() => {}}
-          />
-          <MemoryMedia
-            source={
-              "https://images.unsplash.com/photo-1531845116688-48819b3b68d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1771&q=80"
-            }
-            onPress={() => {}}
-          />
-        </View>
+        {media.length > 0 ? (
+          <View style={styles.mediaContainer}>
+            {media.map((item, index) => (
+              <MemoryMedia
+                key={index}
+                source={item.uri}
+                onPress={() => {
+                  const newMedia = [...media];
+                  newMedia.splice(index, 1);
+                  setMedia(newMedia);
+                }}
+              />
+            ))}
+          </View>
+        ) : null}
         <Pressable style={styles.postButtonContainer}>
           <Text type="semiBold" style={styles.postButtonText}>
             post memory
