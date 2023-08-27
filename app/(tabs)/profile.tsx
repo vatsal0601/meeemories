@@ -1,11 +1,13 @@
 import * as React from "react";
 import { Platform, Pressable, StyleSheet, Switch, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { Image } from "expo-image";
+import { router, Stack } from "expo-router";
 import { useAuth, useUser } from "@clerk/clerk-expo";
+import isNil from "lodash/isNil";
 
-import Layout from "../components/layout";
-import Text from "../components/ui/text";
+import Text from "../../components/ui/text";
 
 interface SettingProps {
   id: string;
@@ -32,7 +34,7 @@ const Setting = ({ id, text }: SettingProps) => {
       <Text style={settingStyles.text}>{text}</Text>
       <Switch
         value={isEnabled}
-        onChange={() => setIsEnabled(isEnabled => !isEnabled)}
+        onChange={() => setIsEnabled((isEnabled) => !isEnabled)}
         style={[
           settingStyles.switch,
           Platform.OS === "ios" && {
@@ -66,17 +68,35 @@ const Profile = () => {
   const { user } = useUser();
   const { signOut } = useAuth();
 
-  const tabBarHeight = useBottomTabBarHeight();
+  if (isNil(user)) return null;
 
-  const getBottomMargin = () =>
-    tabBarHeight + Platform.select({ ios: 24, android: 56 });
+  const height = useBottomTabBarHeight();
+
+  const handleLogout = async () => {
+    setIsLoading(true);
+    await signOut();
+    setIsLoading(false);
+    router.replace("/");
+  };
 
   return (
-    <Layout>
-      <Text type="bold" style={styles.title}>
-        profile
-      </Text>
-      <View style={[styles.container, { marginBottom: getBottomMargin() }]}>
+    <>
+      <Stack.Screen
+        options={{
+          headerTitle: "profile",
+        }}
+      />
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={[
+          styles.contentContainer,
+          { marginBottom: height + 32 },
+        ]}
+        alwaysBounceHorizontal={false}
+        alwaysBounceVertical={false}
+        bounces={false}
+        overScrollMode="never"
+      >
         <View style={styles.settingsContainer}>
           <View style={styles.userContainer}>
             <Image
@@ -89,7 +109,7 @@ const Profile = () => {
                 {user.fullName}
               </Text>
               <Text style={styles.email}>
-                {user.primaryEmailAddress.emailAddress}
+                {user.primaryEmailAddress?.emailAddress}
               </Text>
             </View>
           </View>
@@ -104,24 +124,27 @@ const Profile = () => {
           </View>
         </View>
         <Pressable
-          onPress={async () => {
-            setIsLoading(true);
-            await signOut();
-            setIsLoading(false);
-          }}
+          onPress={handleLogout}
           disabled={isLoading}
-          style={[styles.buttonContainer, isLoading && { opacity: 0.5 }]}>
+          style={[styles.buttonContainer, isLoading && { opacity: 0.5 }]}
+        >
           <Text type="semiBold" style={styles.buttonText}>
             {isLoading ? "logging out" : "logout"}
           </Text>
         </Pressable>
-      </View>
-    </Layout>
+      </ScrollView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 48,
+    backgroundColor: "#030712",
+  },
+  contentContainer: {
     flex: 1,
     justifyContent: "space-between",
   },
@@ -132,7 +155,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 24,
-    marginTop: 24,
   },
   image: {
     width: 120,

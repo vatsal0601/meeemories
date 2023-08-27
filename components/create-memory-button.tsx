@@ -6,14 +6,14 @@ import type { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 import PlusIcon from "../icons/plus";
 
 const CreateMemoryButton = ({ style, ...rest }: BottomTabBarButtonProps) => {
-  const insets = useSafeAreaInsets();
+  const { bottom } = useSafeAreaInsets();
 
   const bottomStyle = Platform.select({
     ios: {
-      bottom: insets.bottom,
+      bottom: bottom === 0 ? 64 : bottom,
     },
     android: {
-      bottom: insets.bottom + 64,
+      bottom: bottom === 0 ? 64 : bottom,
     },
   });
 

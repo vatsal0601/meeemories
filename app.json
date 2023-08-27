@@ -2,7 +2,6 @@
   "expo": {
     "name": "meeemories",
     "slug": "meeemories",
-    "scheme": "meeemories",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -26,7 +25,8 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
     },
     "plugins": [
       [
@@ -35,14 +35,21 @@
           "photosPermission": "The app accesses your photos to let you add them as memories.",
           "cameraPermission": "The app accesses your camera to let you instantly add photos as memories."
         }
-      ]
+      ],
+      "expo-router"
     ],
     "extra": {
       "eas": {
         "projectId": "78d509ea-716b-4e2d-8e50-bebc67f2dc26"
-      },
-      "clerkPublishableKey": "pk_test_c2F2aW5nLXN0YXJsaW5nLTU4LmNsZXJrLmFjY291bnRzLmRldiQ"
+      }
     },
-    "owner": "vatsal0601"
+    "experiments": {
+      "typedRoutes": true
+    },
+    "owner": "vatsal0601",
+    "scheme": "meeemories"
+  },
+  "scripts": {
+    "tsc": "tsc"
   }
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import Svg, { Path, type SvgProps } from "react-native-svg";
 
-const ArrowLeft = (props: SvgProps) => (
+const EllipsisVertical = (props: SvgProps) => (
   <Svg
     width={24}
     height={24}
@@ -9,12 +9,13 @@ const ArrowLeft = (props: SvgProps) => (
     stroke="currentColor"
     strokeWidth={1.5}
     viewBox="0 0 24 24"
-    {...props}>
+    {...props}
+  >
     <Path
       strokeLinecap="round"
       strokeLinejoin="round"
-      d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+      d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5zm0 6a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5zm0 6a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5z"
     />
   </Svg>
 );
-export default ArrowLeft;
+export default EllipsisVertical;

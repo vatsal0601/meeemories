@@ -16,23 +16,23 @@ const Text = ({ type, style, children, ...rest }: Props) => {
 
 const styles = StyleSheet.create({
   regular: {
-    fontFamily: "Syne_400Regular",
+    fontFamily: "Nunito_400Regular",
     color: "#9ca3af",
   },
   medium: {
-    fontFamily: "Syne_500Medium",
+    fontFamily: "Nunito_500Medium",
     color: "#9ca3af",
   },
   semiBold: {
-    fontFamily: "Syne_600SemiBold",
+    fontFamily: "Nunito_600SemiBold",
     color: "#9ca3af",
   },
   bold: {
-    fontFamily: "Syne_700Bold",
+    fontFamily: "Nunito_700Bold",
     color: "#9ca3af",
   },
   extraBold: {
-    fontFamily: "Syne_800ExtraBold",
+    fontFamily: "Nunito_800ExtraBold",
     color: "#9ca3af",
   },
 });
