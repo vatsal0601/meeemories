@@ -1,6 +1,8 @@
 import * as React from "react";
+import { Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { QueryClientProvider } from "react-query";
+import * as NavigationBar from "expo-navigation-bar";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
@@ -38,6 +40,9 @@ const App = () => {
   }, [fontsLoaded, isLoaded]);
 
   if (!fontsLoaded || !isLoaded) return null;
+
+  if (Platform.OS === "android")
+    NavigationBar.setBackgroundColorAsync("#030712");
 
   return (
     <SafeAreaProvider onLayout={onLayoutRootView}>

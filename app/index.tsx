@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Image } from "expo-image";
 import { router, Stack, useFocusEffect } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import { useAuth, useOAuth } from "@clerk/clerk-expo";
@@ -48,31 +50,37 @@ const Register = () => {
           headerTitle: "register",
         }}
       />
-      <View style={styles.container}>
-        <View style={styles.topContainer}>
-          <Text type="bold" style={styles.heading}>
-            welcome to{" "}
-            <Text type="bold" style={styles.meeemories}>
-              meeemories!
+      <SafeAreaView style={styles.container}>
+        <Image
+          source={require("../assets/hero-register.png")}
+          style={styles.heroImage}
+        />
+        <View style={styles.innerContainer}>
+          <View>
+            <Text type="bold" style={styles.heading}>
+              welcome to{" "}
+              <Text type="bold" style={styles.meeemories}>
+                meeemories!
+              </Text>
             </Text>
-          </Text>
-          <Text style={styles.subText}>
-            relive your cherished moments, one notification at a time. sign up
-            or log in using your google account to embark on a journey down
-            memory lane!
-          </Text>
+            <Text style={styles.subText}>
+              relive your cherished moments, one notification at a time. sign up
+              or log in using your google account to embark on a journey down
+              memory lane!
+            </Text>
+          </View>
+          <Pressable
+            onPress={onPress}
+            disabled={isLoading}
+            style={[styles.buttonContainer, isLoading && { opacity: 0.5 }]}
+          >
+            <Text type="semiBold" style={styles.buttonText}>
+              {isLoading ? "starting..." : "lets get started"}
+            </Text>
+            <ArrowRight stroke="#030712" strokeWidth={2} />
+          </Pressable>
         </View>
-        <Pressable
-          onPress={onPress}
-          disabled={isLoading}
-          style={[styles.buttonContainer, isLoading && { opacity: 0.5 }]}
-        >
-          <Text type="semiBold" style={styles.buttonText}>
-            {isLoading ? "starting..." : "lets get started!"}
-          </Text>
-          <ArrowRight stroke="#030712" strokeWidth={2} />
-        </Pressable>
-      </View>
+      </SafeAreaView>
     </>
   );
 };
@@ -80,17 +88,15 @@ const Register = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 64,
     paddingHorizontal: 24,
     backgroundColor: "#030712",
-    justifyContent: "space-between",
-  },
-  topContainer: {
-    gap: 16,
+    justifyContent: "center",
+    gap: 52,
   },
   heading: {
     fontSize: 40,
     color: "#f9fafb",
+    lineHeight: 40,
   },
   meeemories: { color: "#fbbf24" },
   subText: {
@@ -103,12 +109,19 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: 16,
-    gap: 16,
+    gap: 8,
     backgroundColor: "#f9fafb",
   },
   buttonText: {
     fontSize: 20,
     color: "#030712",
+  },
+  innerContainer: {
+    gap: 32,
+  },
+  heroImage: {
+    width: "100%",
+    height: 300,
   },
 });
 
