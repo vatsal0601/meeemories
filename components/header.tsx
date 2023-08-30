@@ -37,7 +37,7 @@ const Header = (props: NativeStackHeaderProps | BottomTabHeaderProps) => {
     return (
       <SafeAreaView style={[styles.titleContainer, platformStyles]}>
         <Text type="bold" style={styles.title}>
-          memories
+          meeemories
         </Text>
         <Image
           source={require("../assets/only-icon.png")}

@@ -110,7 +110,6 @@ const CreateMemory = () => {
               placeholderTextColor="#4b5563"
               onChangeText={(newText) => setDescription(newText)}
               multiline={true}
-              autoFocus={true}
               inputMode="text"
               returnKeyType="done"
               style={styles.input}
