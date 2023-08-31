@@ -13,9 +13,9 @@ import map from "lodash/map";
 import size from "lodash/size";
 import take from "lodash/take";
 import takeRight from "lodash/takeRight";
-import mime from "mime";
 
 import { addMemory } from "../lib/api";
+import { uploadMedia } from "../lib/handle-media";
 import { queryClient } from "../lib/query-client";
 
 import ArrowLeft from "../icons/arrow-left";
@@ -32,7 +32,7 @@ const CreateMemory = () => {
     React.useState(false);
 
   const { bottom } = useSafeAreaInsets();
-  const { getToken } = useAuth();
+  const { getToken, userId } = useAuth();
 
   const mutation = useMutation({
     mutationKey: "post-memory",
@@ -61,22 +61,23 @@ const CreateMemory = () => {
     const formData = new FormData();
     formData.append("description", description);
     formData.append("publishedAt", date);
+    if (isNil(userId)) return;
 
     if (size(media) > 0) {
-      let i = 0;
       for (const item of media) {
         const uri = item.uri;
-        const mimeType = mime.getType(uri);
-        if (isNil(mimeType)) continue;
-        const extension = mime.getExtension(mimeType);
-        const fileName = `media_${i + 1}.${extension}`;
-        const media = { uri, name: fileName, type: mimeType } as any; // TODO: fix this type
-        formData.append("media", media);
-        i++;
+        const media = await uploadMedia(userId, uri);
+        // const mimeType = mime.getType(uri);
+        // if (isNil(mimeType)) continue;
+        // const extension = mime.getExtension(mimeType);
+        // const fileName = `media_${i + 1}.${extension}`;
+        // const media = { uri, name: fileName, type: mimeType } as any; // TODO: fix this type
+        // formData.append("media", media);
+        // i++;
       }
     }
 
-    mutation.mutate(formData);
+    // mutation.mutate(formData);
   };
 
   return (

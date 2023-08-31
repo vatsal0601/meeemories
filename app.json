@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vatsal0601.meeemories"
     },
     "android": {
       "adaptiveIcon": {
