@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#030712"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.vatsal0601.meeemories"

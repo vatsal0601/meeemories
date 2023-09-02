@@ -9,7 +9,8 @@ const Plus = (props: SvgProps) => (
     stroke="currentColor"
     strokeWidth={1.5}
     viewBox="0 0 24 24"
-    {...props}>
+    {...props}
+  >
     <Path
       strokeLinecap="round"
       strokeLinejoin="round"

@@ -24,7 +24,8 @@ const Loader = (props: SvgProps) => {
             }),
           },
         ],
-      }}>
+      }}
+    >
       <Svg
         width={24}
         height={24}
@@ -33,7 +34,8 @@ const Loader = (props: SvgProps) => {
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
-        {...props}>
+        {...props}
+      >
         <Path d="M21 12a9 9 0 1 1-6.219-8.56" />
       </Svg>
     </Animated.View>
