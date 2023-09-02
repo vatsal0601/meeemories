@@ -13,5 +13,5 @@ export const uploadMedia = async (uri: string) => {
 
   const placeholder = await generatePlaceholder(uri);
 
-  console.log("Uploading to S3...", mimeType, extension, placeholder);
+  console.log("will be uploading to S3", mimeType, extension, placeholder);
 };
