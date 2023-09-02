@@ -43,3 +43,16 @@ export const addMemory = async (
     },
   });
 };
+
+export const getPresignedUrl = async (
+  getToken: () => Promise<string | null>,
+  data: { key: string; contentType: string }
+) => {
+  const token = await getToken();
+
+  return client.post("/media/api", data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

@@ -8,7 +8,6 @@ import { router } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import concat from "lodash/concat";
-import isNil from "lodash/isNil";
 import map from "lodash/map";
 import size from "lodash/size";
 import take from "lodash/take";
@@ -61,19 +60,10 @@ const CreateMemory = () => {
     const formData = new FormData();
     formData.append("description", description);
     formData.append("publishedAt", date);
-    if (isNil(userId)) return;
-
     if (size(media) > 0) {
       for (const item of media) {
         const uri = item.uri;
-        const media = await uploadMedia(userId, uri);
-        // const mimeType = mime.getType(uri);
-        // if (isNil(mimeType)) continue;
-        // const extension = mime.getExtension(mimeType);
-        // const fileName = `media_${i + 1}.${extension}`;
-        // const media = { uri, name: fileName, type: mimeType } as any; // TODO: fix this type
-        // formData.append("media", media);
-        // i++;
+        const media = await uploadMedia(uri);
       }
     }
 
